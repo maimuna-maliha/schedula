@@ -67,8 +67,8 @@ function CourseForm({ onAddCourse, courses }) {
     setSection('');
     setCredit('');
     setDays([]);
-    setStartTime('08:00');
-    setEndTime('10:00');
+    setStartTime(' ');
+    setEndTime(' ');
     setConfirmOvernight(false);
     setShowOvernightWarning(false);
   };
@@ -123,7 +123,7 @@ function CourseForm({ onAddCourse, courses }) {
       </div>
 
       <div style={{ marginBottom: '1rem' }}>
-        <label style={{ display: 'block', marginBottom: '0.5rem' }}>Days:</label>
+        <label style={{ display: 'block', marginBottom: '0.5rem' }}>Days: </label>
         <div style={{ display: 'flex', flexWrap: 'wrap', gap: '1rem' }}>
           {allDays.map((day) => (
             <label key={day}>
