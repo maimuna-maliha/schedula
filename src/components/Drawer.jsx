@@ -23,7 +23,7 @@ function Drawer() {
       <div
         onClick={() => setOpen(!open)}
         style={{
-          fontSize: '1.8rem',
+          fontSize: '1.04rem',
           cursor: 'pointer',
           position: 'fixed',
           top: '1rem',
@@ -50,7 +50,7 @@ function Drawer() {
             borderRadius: '10px',
             boxShadow: '0 4px 8px rgba(0,0,0,0.15)',
             zIndex: 999,
-            width: '200px',
+            width: '150px',
             transition: 'all 0.3s ease-in-out',
           }}
         >

@@ -218,6 +218,7 @@ function CourseManager({ courses, onEditCourse, onRemoveCourse }) {
             cellPadding="8"
             style={{
               width: '100%',
+              minWidth: '600px', // allow horizontal scroll on small screens
               borderCollapse: 'collapse',
               marginTop: '1rem',
               textAlign: 'center',
