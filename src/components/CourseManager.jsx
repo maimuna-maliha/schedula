@@ -68,7 +68,6 @@ function CourseManager({ courses, onEditCourse, onRemoveCourse }) {
 
     onEditCourse(updatedCourse);
 
-    // Reset fields
     setEditTarget({ code: '', section: '' });
     setNewCredit('');
     setNewDays([]);
@@ -126,70 +125,85 @@ function CourseManager({ courses, onEditCourse, onRemoveCourse }) {
         </div>
       )}
 
-      <form onSubmit={handleEdit}>
-        <input
-          type="text"
-          placeholder="Course Code or Title"
-          value={editTarget.code}
-          onChange={(e) => setEditTarget({ ...editTarget, code: e.target.value })}
-          required
-          style={{ width: '50%', marginBottom: '1rem' }}
-        />
-        <input
-          type="text"
-          placeholder="Section"
-          value={editTarget.section}
-          onChange={(e) => setEditTarget({ ...editTarget, section: e.target.value })}
-          required
-        />
-        <br />
+      <form onSubmit={handleEdit} style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '1rem' }}>
+          <input
+            type="text"
+            placeholder="Course Code"
+            value={editTarget.code}
+            onChange={(e) => setEditTarget({ ...editTarget, code: e.target.value })}
+            required
+            style={{ flex: '1 1 180px' }}
+          />
+          <input
+            type="text"
+            placeholder="Section"
+            value={editTarget.section}
+            onChange={(e) => setEditTarget({ ...editTarget, section: e.target.value })}
+            required
+            style={{ flex: '1 1 100px' }}
+          />
+        </div>
+
         <input
           type="number"
           placeholder="New Credit"
           value={newCredit}
           onChange={(e) => setNewCredit(e.target.value)}
+          style={{ maxWidth: '200px' }}
         />
-        <div style={{ marginTop: '1rem', marginBottom: '1rem' }}>
+
+        <div>
           <label>New Days: </label>
-          {allDays.map((day) => (
-            <label key={day} style={{ marginRight: '1rem' }}>
-              <input
-                type="checkbox"
-                value={day}
-                checked={newDays.includes(day)}
-                onChange={() => toggleDay(day)}
-              />{' '}
-              {day}
-            </label>
-          ))}
-        </div>
-        <div style={{ marginBottom: '1rem' }}>
-          <label>Start Time: </label>
-          <input
-            type="time"
-            value={newStartTime}
-            onChange={(e) => {
-              setNewStartTime(e.target.value);
-              setConfirmOvernight(false);
-              setShowOvernightWarning(false);
-            }}
-          />
-          <label style={{ marginLeft: '1rem' }}>End Time: </label>
-          <input
-            type="time"
-            value={newEndTime}
-            onChange={(e) => {
-              setNewEndTime(e.target.value);
-              setConfirmOvernight(false);
-              setShowOvernightWarning(false);
-            }}
-          />
+          <div style={{ display: 'flex', flexWrap: 'wrap', gap: '1rem', marginTop: '0.5rem' }}>
+            {allDays.map((day) => (
+              <label key={day}>
+                <input
+                  type="checkbox"
+                  value={day}
+                  checked={newDays.includes(day)}
+                  onChange={() => toggleDay(day)}
+                />{' '}
+                {day}
+              </label>
+            ))}
+          </div>
         </div>
 
-        <button type="submit">Update Course</button>
-        <button type="button" onClick={handleRemove} style={{ marginLeft: '1rem' }}>
-          Remove Course
-        </button>
+        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '1rem' }}>
+          <label>
+            Start Time:{' '}
+            <input
+              type="time"
+              value={newStartTime}
+              onChange={(e) => {
+                setNewStartTime(e.target.value);
+                setConfirmOvernight(false);
+                setShowOvernightWarning(false);
+              }}
+            />
+          </label>
+
+          <label>
+            End Time:{' '}
+            <input
+              type="time"
+              value={newEndTime}
+              onChange={(e) => {
+                setNewEndTime(e.target.value);
+                setConfirmOvernight(false);
+                setShowOvernightWarning(false);
+              }}
+            />
+          </label>
+        </div>
+
+        <div>
+          <button type="submit">Update Course</button>
+          <button type="button" onClick={handleRemove} style={{ marginLeft: '1rem' }}>
+            Remove Course
+          </button>
+        </div>
       </form>
 
       <hr />
@@ -198,39 +212,41 @@ function CourseManager({ courses, onEditCourse, onRemoveCourse }) {
       {sortedCourses.length === 0 ? (
         <p>No courses added yet.</p>
       ) : (
-        <table
-          border="1"
-          cellPadding="8"
-          style={{
-            width: '100%',
-            borderCollapse: 'collapse',
-            marginTop: '1rem',
-            textAlign: 'center',
-          }}
-        >
-          <thead style={{ backgroundColor: '#f0f0f0' }}>
-            <tr>
-              <th>Course Code</th>
-              <th>Section</th>
-              <th>Credit</th>
-              <th>Days</th>
-              <th>Start Time</th>
-              <th>End Time</th>
-            </tr>
-          </thead>
-          <tbody>
-            {sortedCourses.map((c, i) => (
-              <tr key={i}>
-                <td>{c.code}</td>
-                <td>{c.section}</td>
-                <td>{c.credit}</td>
-                <td>{c.days.join(', ')}</td>
-                <td>{formatTimeToAmPm(c.startTime)}</td>
-                <td>{formatTimeToAmPm(c.endTime)}</td>
+        <div style={{ overflowX: 'auto' }}>
+          <table
+            border="1"
+            cellPadding="8"
+            style={{
+              width: '100%',
+              borderCollapse: 'collapse',
+              marginTop: '1rem',
+              textAlign: 'center',
+            }}
+          >
+            <thead style={{ backgroundColor: '#f0f0f0' }}>
+              <tr>
+                <th>Course Code</th>
+                <th>Section</th>
+                <th>Credit</th>
+                <th>Days</th>
+                <th>Start Time</th>
+                <th>End Time</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {sortedCourses.map((c, i) => (
+                <tr key={i}>
+                  <td>{c.code}</td>
+                  <td>{c.section}</td>
+                  <td>{c.credit}</td>
+                  <td>{c.days.join(', ')}</td>
+                  <td>{formatTimeToAmPm(c.startTime)}</td>
+                  <td>{formatTimeToAmPm(c.endTime)}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       )}
     </div>
   );

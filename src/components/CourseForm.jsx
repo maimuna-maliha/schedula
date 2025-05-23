@@ -37,13 +37,11 @@ function CourseForm({ onAddCourse, courses }) {
       return;
     }
 
-    // Handle overnight warning
     if (startTime > endTime && !confirmOvernight) {
       setShowOvernightWarning(true);
       return;
     }
 
-    // Check for duplicate section for the same course code
     const duplicate = courses.some(
       (c) =>
         c.code.trim().toLowerCase() === trimmedCode.toLowerCase() &&
@@ -65,7 +63,6 @@ function CourseForm({ onAddCourse, courses }) {
 
     onAddCourse(newCourse);
 
-    // Reset form
     setCode('');
     setSection('');
     setCredit('');
@@ -80,9 +77,7 @@ function CourseForm({ onAddCourse, courses }) {
     <form onSubmit={handleSubmit} style={{ marginBottom: '2rem' }}>
       <h3>Add a Course</h3>
 
-      {error && (
-        <p style={{ color: 'red', marginBottom: '0.5rem' }}>{error}</p>
-      )}
+      {error && <p style={{ color: 'red', marginBottom: '0.5rem' }}>{error}</p>}
 
       {showOvernightWarning && (
         <div style={{ marginBottom: '0.5rem', color: 'orange' }}>
@@ -98,70 +93,78 @@ function CourseForm({ onAddCourse, courses }) {
         </div>
       )}
 
-      <input
-        type="text"
-        placeholder="Course Code or Title"
-        value={code}
-        onChange={(e) => setCode(e.target.value)}
-        required
-        style={{ width: '50%', marginBottom: '1rem' }}
-      />
-
-      <input
-        type="text"
-        placeholder="Section"
-        value={section}
-        onChange={(e) => setSection(e.target.value)}
-        required
-      />
-
-      <input
-        type="number"
-        placeholder="Credit"
-        value={credit}
-        onChange={(e) => setCredit(e.target.value)}
-        min="0"
-        step="0.5"
-        required
-      />
-
-      <div style={{ marginTop: '1rem', marginBottom: '1rem' }}>
-        <label>Days: </label>
-        {allDays.map((day) => (
-          <label key={day} style={{ marginRight: '1rem' }}>
-            <input
-              type="checkbox"
-              value={day}
-              checked={days.includes(day)}
-              onChange={() => toggleDay(day)}
-            />{' '}
-            {day}
-          </label>
-        ))}
+      <div style={{ display: 'flex', flexWrap: 'wrap', gap: '1rem', marginBottom: '1rem' }}>
+        <input
+          type="text"
+          placeholder="Course Code"
+          value={code}
+          onChange={(e) => setCode(e.target.value)}
+          required
+          style={{ flex: '1 1 200px', minWidth: '140px' }}
+        />
+        <input
+          type="text"
+          placeholder="Section"
+          value={section}
+          onChange={(e) => setSection(e.target.value)}
+          required
+          style={{ flex: '1 1 100px', minWidth: '100px' }}
+        />
+        <input
+          type="number"
+          placeholder="Credit"
+          value={credit}
+          onChange={(e) => setCredit(e.target.value)}
+          min="0"
+          step="0.5"
+          required
+          style={{ flex: '1 1 100px', minWidth: '100px' }}
+        />
       </div>
 
       <div style={{ marginBottom: '1rem' }}>
-        <label>Start Time: </label>
-        <input
-          type="time"
-          value={startTime}
-          onChange={(e) => {
-            setStartTime(e.target.value);
-            setConfirmOvernight(false);
-            setShowOvernightWarning(false);
-          }}
-        />
+        <label style={{ display: 'block', marginBottom: '0.5rem' }}>Days:</label>
+        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '1rem' }}>
+          {allDays.map((day) => (
+            <label key={day}>
+              <input
+                type="checkbox"
+                value={day}
+                checked={days.includes(day)}
+                onChange={() => toggleDay(day)}
+              />{' '}
+              {day}
+            </label>
+          ))}
+        </div>
+      </div>
 
-        <label style={{ marginLeft: '1rem' }}>End Time: </label>
-        <input
-          type="time"
-          value={endTime}
-          onChange={(e) => {
-            setEndTime(e.target.value);
-            setConfirmOvernight(false);
-            setShowOvernightWarning(false);
-          }}
-        />
+      <div style={{ display: 'flex', flexWrap: 'wrap', gap: '1rem', marginBottom: '1rem' }}>
+        <label>
+          Start Time:{' '}
+          <input
+            type="time"
+            value={startTime}
+            onChange={(e) => {
+              setStartTime(e.target.value);
+              setConfirmOvernight(false);
+              setShowOvernightWarning(false);
+            }}
+          />
+        </label>
+
+        <label>
+          End Time:{' '}
+          <input
+            type="time"
+            value={endTime}
+            onChange={(e) => {
+              setEndTime(e.target.value);
+              setConfirmOvernight(false);
+              setShowOvernightWarning(false);
+            }}
+          />
+        </label>
       </div>
 
       <button type="submit">Add Course</button>

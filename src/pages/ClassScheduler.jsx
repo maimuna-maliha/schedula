@@ -53,41 +53,45 @@ const renderScheduleTable = (schedule) => {
   );
 
   return (
-    <table
-      border="1"
-      cellPadding="8"
-      style={{
-        width: '100%',
-        borderCollapse: 'collapse',
-        marginTop: '1rem',
-        textAlign: 'center'
-      }}
-    >
-      <thead style={{ backgroundColor: '#f0f0f0' }}>
-        <tr>
-          <th>Course Code</th>
-          <th>Section</th>
-          <th>Credit</th>
-          <th>Days</th>
-          <th>Start Time</th>
-          <th>End Time</th>
-        </tr>
-      </thead>
-      <tbody>
-        {sorted.map((c, i) => (
-          <tr key={i}>
-            <td>{c.code}</td>
-            <td>{c.section}</td>
-            <td>{c.credit}</td>
-            <td>{c.days.join(', ')}</td>
-            <td>{formatTimeToAmPm(c.startTime)}</td>
-            <td>{formatTimeToAmPm(c.endTime)}</td>
+    <div style={{ overflowX: 'auto' }}>
+      <table
+        border="1"
+        cellPadding="8"
+        style={{
+          width: '100%',
+          minWidth: '600px', // allow horizontal scroll on small screens
+          borderCollapse: 'collapse',
+          marginTop: '1rem',
+          textAlign: 'center'
+        }}
+      >
+        <thead style={{ backgroundColor: '#f0f0f0' }}>
+          <tr>
+            <th>Course Code</th>
+            <th>Section</th>
+            <th>Credit</th>
+            <th>Days</th>
+            <th>Start Time</th>
+            <th>End Time</th>
           </tr>
-        ))}
-      </tbody>
-    </table>
+        </thead>
+        <tbody>
+          {sorted.map((c, i) => (
+            <tr key={i}>
+              <td>{c.code}</td>
+              <td>{c.section}</td>
+              <td>{c.credit}</td>
+              <td>{c.days.join(', ')}</td>
+              <td>{formatTimeToAmPm(c.startTime)}</td>
+              <td>{formatTimeToAmPm(c.endTime)}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
   );
 };
+
 
   return (
     <div style={{ padding: '2rem', maxWidth: '800px', margin: '0 auto' }}>

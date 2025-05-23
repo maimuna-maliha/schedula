@@ -1,11 +1,16 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { auth } from '../firebase';
 
 function Drawer() {
   const [open, setOpen] = useState(false);
   const navigate = useNavigate();
-  const user = auth.currentUser;
+  const [user, setUser] = useState(auth.currentUser);
+
+  useEffect(() => {
+    const unsubscribe = auth.onAuthStateChanged(setUser);
+    return () => unsubscribe();
+  }, []);
 
   const logout = () => {
     auth.signOut();
@@ -13,39 +18,64 @@ function Drawer() {
   };
 
   return (
-    <>
+    <div>
+      {/* Hamburger Menu */}
       <div
-        style={{
-          fontSize: '1.5rem',
-          cursor: 'pointer',
-          position: 'absolute',
-          top: '1rem',
-          left: '1rem'
-        }}
         onClick={() => setOpen(!open)}
+        style={{
+          fontSize: '1.8rem',
+          cursor: 'pointer',
+          position: 'fixed',
+          top: '1rem',
+          left: '1rem',
+          zIndex: 1000,
+          backgroundColor: '#fff',
+          borderRadius: '6px',
+          padding: '0.3rem 0.6rem',
+          boxShadow: '0 2px 5px rgba(0,0,0,0.2)',
+        }}
       >
         ≡
       </div>
 
+      {/* Drawer Panel */}
       {open && (
         <div
           style={{
-            position: 'absolute',
-            top: '3.5rem',
+            position: 'fixed',
+            top: '4rem',
             left: '1rem',
-            background: '#f0f0f0',
+            backgroundColor: '#f8f9fa',
             padding: '1rem',
-            borderRadius: '8px',
-            boxShadow: '0 0 10px rgba(0,0,0,0.1)'
+            borderRadius: '10px',
+            boxShadow: '0 4px 8px rgba(0,0,0,0.15)',
+            zIndex: 999,
+            width: '200px',
+            transition: 'all 0.3s ease-in-out',
           }}
         >
-          <Link to="/">Home</Link><br />
-          {user && <Link to="/dashboard">Dashboard</Link>}<br />
-          {user && <Link to="/class-scheduler">Class Scheduler</Link>}<br />
-          {user && <button onClick={logout}>Logout</button>}
+          <nav style={{ display: 'flex', flexDirection: 'column', gap: '0.8rem' }}>
+            {user && <Link to="/dashboard" onClick={() => setOpen(false)}>Dashboard</Link>}
+            {user && <Link to="/class-scheduler" onClick={() => setOpen(false)}>Class Scheduler</Link>}
+            {user && (
+              <button
+                onClick={logout}
+                style={{
+                  background: '#0077b6',
+                  color: '#fff',
+                  border: 'none',
+                  padding: '0.5rem 1rem',
+                  borderRadius: '5px',
+                  cursor: 'pointer',
+                }}
+              >
+                Logout
+              </button>
+            )}
+          </nav>
         </div>
       )}
-    </>
+    </div>
   );
 }
 
