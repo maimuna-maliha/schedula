@@ -16,17 +16,6 @@ function Home() {
         background: 'linear-gradient(135deg, #f9fafe, #eaf0ff)'
       }}
     >
-      {/* Logo */}
-      <img
-        src="/schedula-icon.png"
-        alt="Schedula Logo"
-        style={{
-          width: '200px',
-          height: '55px',
-          marginBottom: '1rem',
-          borderRadius: '12px',
-        }}
-      />
 
       <h1 style={{ fontSize: '2.5rem', marginBottom: '0.5rem', color: '#333' }}>
         Welcome to <span style={{ color: '#0077b6' }}>Schedula</span>
