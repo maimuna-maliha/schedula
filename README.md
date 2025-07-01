@@ -35,21 +35,6 @@ Schedula is your smart scheduling companion — a full-featured web app designed
 
 ---
 
-## 🖼️ Screenshots
-
-> *(Optional: you can add screenshots later here)*
-
----
-
-## 🧩 Upcoming Features
-
-- 🗓️ **Event Scheduling** — manage deadlines, birthdays, exams, etc.
-- 🤝 **Meeting Scheduler** — perfect for team syncs or advisor sessions
-- 📧 **Email Reminders** — auto-alerts for upcoming activities
-- 🔗 **Shareable Links** — send schedules to friends or group members
-
----
-
 ## 👩‍💻 Developer
 
 **Mst. Maimuna Hossain Maliha**  
